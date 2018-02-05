@@ -14,6 +14,7 @@ namespace ShutdownIt.ViewModel
         private string m_timeDescription = "Choose when you want to perform a action";
         private string m_actionDescription = "Choose the action to perform";
         private string m_startDescription = "Go";
+        private string m_windowTitle = "ShutdownIt";
 
         private bool m_is24Hours = true;
 
@@ -42,6 +43,7 @@ namespace ShutdownIt.ViewModel
                     case DialogBox.ResultEnum.LeftButtonClicked:
                         Scheduler.CancelTasks();
                         StartDescription = "Start";
+                        WindowTitle = "ShutdownIt";
                         return;
                     case DialogBox.ResultEnum.RightButtonClicked:
                         return;
@@ -53,52 +55,26 @@ namespace ShutdownIt.ViewModel
 
             if (timeWait == TimeWait.In)
             {
-                TimeSpan executeTime = DateTime.Now.Add(SelectedTime.ToTimeSpan()).ToTimeSpan();
-                Scheduler.Run(action, executeTime);
+                TimeSpan executeTime = DateTime.Now.AddWithoutDays(SelectedTime.ToTimeSpan()).ToTimeSpan();
+                Scheduler.Run(action, executeTime, this);
             }
             else
-                Scheduler.Run(action, SelectedTime.ToTimeSpan());
+            {
+                TimeSpan current = DateTime.Now.ToTimeSpan();
+                TimeSpan executeTime = SelectedTime.ToTimeSpan();
+                if(executeTime.Hours < 01)
+                {
+                    executeTime = executeTime.Add(new TimeSpan(1, executeTime.Hours, executeTime.Minutes, executeTime.Seconds, executeTime.Milliseconds));
+                }
+                else if(executeTime <= current)
+                {
+                    DialogBox.Show("Wrong Date", "You selected a date that is already passed");
+                    return;
+                }
+                Scheduler.Run(action, executeTime, this);
+            }
             StartDescription = "Cancel";
         });
-
-        public ComboBoxItem SelectedTimeWait
-        {
-            get => m_timeWait;
-            set
-            {
-                if (m_timeWait == value)
-                    return;
-                m_timeWait = value;
-                OnPropertyChanged(nameof(SelectedTimeWait));
-
-            }
-        }
-
-        public ComboBoxItem SelectedAction
-        {
-            get => m_action;
-            set
-            {
-                if (m_action == value)
-                    return;
-                m_action = value;
-                OnPropertyChanged(nameof(SelectedAction));
-                CommandManager.InvalidateRequerySuggested();
-            }
-        }
-
-        public DateTime SelectedTime
-        {
-            get => m_time;
-            set
-            {
-                if (m_time == value)
-                    return;
-                m_time = value;
-                OnPropertyChanged(nameof(SelectedTime));
-                CommandManager.InvalidateRequerySuggested();
-            }
-        }
 
         public string TimeDescription
         {
@@ -148,6 +124,18 @@ namespace ShutdownIt.ViewModel
             }
         }
 
+        public string WindowTitle
+        {
+            get => m_windowTitle;
+            set
+            {
+                if (m_windowTitle == value)
+                    return;
+                m_windowTitle = value;
+                OnPropertyChanged(nameof(WindowTitle));
+            }
+        }
+
         public bool Is24Hours
         {
             get => m_is24Hours;
@@ -157,6 +145,44 @@ namespace ShutdownIt.ViewModel
                     return;
                 m_is24Hours = value;
                 OnPropertyChanged(nameof(Is24Hours));
+            }
+        }
+
+        public DateTime SelectedTime
+        {
+            get => m_time;
+            set
+            {
+                if (m_time == value)
+                    return;
+                m_time = value;
+                OnPropertyChanged(nameof(SelectedTime));
+                CommandManager.InvalidateRequerySuggested();
+            }
+        }
+
+        public ComboBoxItem SelectedTimeWait
+        {
+            get => m_timeWait;
+            set
+            {
+                if (m_timeWait == value)
+                    return;
+                m_timeWait = value;
+                OnPropertyChanged(nameof(SelectedTimeWait));
+            }
+        }
+
+        public ComboBoxItem SelectedAction
+        {
+            get => m_action;
+            set
+            {
+                if (m_action == value)
+                    return;
+                m_action = value;
+                OnPropertyChanged(nameof(SelectedAction));
+                CommandManager.InvalidateRequerySuggested();
             }
         }
 

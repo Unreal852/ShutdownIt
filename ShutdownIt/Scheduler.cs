@@ -1,4 +1,5 @@
 ﻿using ShutdownIt.Computer_Actions;
+using ShutdownIt.ViewModel;
 using System;
 using System.Collections.Generic;
 
@@ -13,9 +14,9 @@ namespace ShutdownIt
         /// </summary>
         /// <param name="action">Action to execute when the task is completed</param>
         /// <param name="executeTime">When to execute the action</param>
-        public static void Run(IAction action, TimeSpan executeTime)
+        public static void Run(IAction action, TimeSpan executeTime, MainWindowViewModel viewModel = null)
         {
-            m_tasks.Add(new Task(action, executeTime));
+            m_tasks.Add(new Task(action, executeTime, viewModel));
         }
 
         /// <summary>

@@ -13,5 +13,11 @@ namespace ShutdownIt
         {
             return TimeSpan.FromTicks(date.Ticks);
         }
+
+
+        public static DateTime AddWithoutDays(this DateTime date, TimeSpan timeSpan)
+        {
+            return date.AddHours(timeSpan.Hours).AddMinutes(timeSpan.Minutes).AddSeconds(timeSpan.Seconds).AddMilliseconds(timeSpan.Milliseconds);
+        }
     }
 }

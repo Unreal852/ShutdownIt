@@ -11,7 +11,7 @@
         ResizeMode="CanMinimize"
         TitleCaps="false"
         Icon="./icon.ico"
-        Title="ShutdownIt" Height="186.275" Width="345">
+        Title="{Binding WindowTitle}" Height="186.275" Width="500">
     <Window.Resources>
 
     </Window.Resources>

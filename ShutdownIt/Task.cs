@@ -1,4 +1,5 @@
 ﻿using ShutdownIt.Computer_Actions;
+using ShutdownIt.ViewModel;
 using System;
 using System.Windows.Forms;
 
@@ -14,10 +15,13 @@ namespace ShutdownIt
 
         private IAction m_action;
 
-        public Task(IAction action, TimeSpan executeAt)
+        private MainWindowViewModel m_viewModel;
+
+        public Task(IAction action, TimeSpan executeAt, MainWindowViewModel viewModel = null)
         {
             m_action = action;
             m_timeSpan = executeAt;
+            m_viewModel = viewModel;
             m_timer.Tick += OnTick;
             m_timer.Enabled = true;
             m_timer.Interval = 1000;
@@ -39,10 +43,16 @@ namespace ShutdownIt
         {
             if (Cancel)
                 return;
-            if (DateTime.Now.ToTimeSpan() >= m_timeSpan)
+            TimeSpan currentTime = DateTime.Now.ToTimeSpan();
+            if (currentTime >= m_timeSpan)
             {
                 m_timer.Stop();
                 m_action.Execute();
+            }
+            if (m_viewModel != null)
+            {
+                TimeSpan remaining = currentTime > m_timeSpan ? (currentTime - m_timeSpan) : (m_timeSpan - currentTime);
+                m_viewModel.WindowTitle = $"ShutdownIt - {remaining.Hours} {(remaining.Hours > 1 ? "Hours" : "Hour")} {remaining.Minutes} {(remaining.Minutes > 1 ? "Minutes" : "Minute")} {remaining.Seconds} {(remaining.Seconds > 1 ? "Secondes" : "Seconde")} Remaining";
             }
         }
     }
