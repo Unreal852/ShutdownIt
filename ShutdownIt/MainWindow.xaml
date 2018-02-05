@@ -11,7 +11,7 @@
         ResizeMode="CanMinimize"
         TitleCaps="false"
         Icon="./icon.ico"
-        Title="{Binding WindowTitle}" Height="186.275" Width="500">
+        Title="{Binding WindowTitle}" Height="186.275" Width="500" WindowStartupLocation="CenterScreen">
     <Window.Resources>
 
     </Window.Resources>
