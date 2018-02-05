@@ -1,0 +1,29 @@
+﻿<MahApps:MetroWindow x:Class="ShutdownIt.MainWindow"
+        xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+        xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+        xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
+        xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
+        xmlns:Material="http://materialdesigninxaml.net/winfx/xaml/themes"
+        xmlns:MahApps="http://metro.mahapps.com/winfx/xaml/controls"
+        mc:Ignorable="d"
+        Foreground="White"
+        Background="#1E1E1E"
+        ResizeMode="CanMinimize"
+        TitleCaps="false"
+        Title="ShutdownIt" Height="186.275" Width="345">
+    <Window.Resources>
+
+    </Window.Resources>
+    <Grid>
+        <Label Content="{Binding TimeDescription}"/>
+        <DockPanel VerticalAlignment="Top" HorizontalAlignment="Stretch" Margin="0 25 0 0">
+            <ComboBox Margin="5, 0, 0 ,0" IsEditable="False" SelectedIndex="0" VerticalAlignment="Center" ItemsSource="{Binding TimeItems, Mode=OneWay}" SelectedItem="{Binding SelectedTimeWait}"/>
+            <Material:TimePicker x:Name="TimeSelector" Margin="10, 3, 0 ,0" VerticalAlignment="Center" Is24Hours="True" Material:HintAssist.Hint="{Binding SelectTimeText}" HorizontalAlignment="Stretch" SelectedTime="{Binding SelectedTime}"/>
+        </DockPanel>
+        <Label Content="{Binding ActionDescription}" Margin="0 55 0 0"/>
+        <DockPanel VerticalAlignment="Top" HorizontalAlignment="Stretch" Margin="0 75 0 0">
+            <ComboBox Margin="5, 0, 0 ,0" IsEditable="False" SelectedIndex="1" VerticalAlignment="Center" ItemsSource="{Binding ActionItems, Mode=OneWay}" SelectedItem="{Binding SelectedAction}"/>
+        </DockPanel>
+        <Button VerticalAlignment="Bottom" Content="{Binding StartDescription}" Margin="5 5 5 5" Command="{Binding StartCommand}"/>
+    </Grid>
+</MahApps:MetroWindow>
