@@ -10,6 +10,7 @@
         Background="#1E1E1E"
         ResizeMode="CanMinimize"
         TitleCaps="false"
+        Icon="./icon.ico"
         Title="ShutdownIt" Height="186.275" Width="345">
     <Window.Resources>
 
