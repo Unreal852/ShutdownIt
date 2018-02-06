@@ -1,4 +1,6 @@
-﻿namespace ShutdownIt.Computer_Actions
+﻿using System.Diagnostics;
+
+namespace ShutdownIt.Computer_Actions
 {
     public class ShutdownAction : IAction
     {
@@ -12,7 +14,7 @@
         /// </summary>
         public void Execute()
         {
-            Win32.ExitWindowsEx(1, 0);
+            Process.Start("shutdown", "/s /t 0");
         }
 
         public override string ToString()

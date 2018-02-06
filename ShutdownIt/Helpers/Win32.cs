@@ -9,7 +9,5 @@ namespace ShutdownIt
 
         [DllImport("user32.dll")]
         public static extern int ExitWindowsEx(int uFlags, int dwReason);
-
-
     }
 }

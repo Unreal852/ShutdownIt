@@ -48,6 +48,7 @@ namespace ShutdownIt
             {
                 m_timer.Stop();
                 m_action.Execute();
+                return;
             }
             if (m_viewModel != null)
             {
