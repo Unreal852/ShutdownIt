@@ -86,7 +86,6 @@
     <Compile Include="Computer Actions\ShutdownAction.cs" />
     <Compile Include="Computer Actions\RebootAction.cs" />
     <Compile Include="Extenders\DateTimeExtender.cs" />
-    <Compile Include="Extenders\TimeSpanExtender.cs" />
     <Compile Include="Helpers\ThemeManagerHelper.cs" />
     <Compile Include="Scheduler.cs" />
     <Compile Include="Task.cs" />
